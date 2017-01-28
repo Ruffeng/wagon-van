@@ -13,18 +13,24 @@ class Wagon < Gosu::Window
     @x_back = @y_back = 0
   end
   def update
-    @x_back -= 10
-    @coordinates = Gosu::Image.from_text(
-      self, "x: #{@x_back} - loc: #{@local_x} bgwidth : #{@background.width}",Gosu.default_font_name, 30)
+    # this variable is the one which takes care to move the background.
+    # if u increase the number, then the velocity is faster
+    # important to set a level
+    @x_back -= 3
+    # @coordinates = Gosu::Image.from_text(
+    #   self, "x: #{@x_back} - loc: #{@local_x} bgwidth : #{@background.width}",Gosu.default_font_name, 30)
 
   end
 
   def draw
-    @local_x = @x_back % -640
+    # Calculating the new position of the background
+    @local_x = @x_back % -800
     @player.draw
+    # Drawing background
+    @background.draw(@local_x,0,0)
     if @local_x < 0
-      @background.draw(@local_x + 640,0,0)
+      @background.draw(@local_x + 800,0,0)
     end
-    @coordinates.draw(0,0,1)
+    #@coordinates.draw(0,0,1)
   end
 end
