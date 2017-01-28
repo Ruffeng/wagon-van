@@ -5,13 +5,15 @@ class Wagon < Gosu::Window
     #size of the game
     super 640,480
     # The title of the game
+    @original_y = 352
+    @original_x = 170
     self.caption = "Le Wagon Game!"
     @background = background
     @player = player
-    @player.warp(170,352)
+    @player.warp(@original_x,@original_y)
     #Scrolling effect
     @x_back = @y_back = 0
-    @allow_to_press = true
+
   end
   def update
     # this variable is the one which takes care to move the background.
@@ -20,12 +22,13 @@ class Wagon < Gosu::Window
     @x_back -= 3
     # @coordinates = Gosu::Image.from_text(
     #   self, "x: #{@x_back} - loc: #{@local_x} bgwidth : #{@background.width}",Gosu.default_font_name, 30)
-    if Gosu.button_down? Gosu::KbSpace and @allow_to_press
-      @allow_to_press = false
-      @player.jump
-
+    if Gosu.button_down? Gosu::KbSpace
+      @player.jump(@original_y - 200)
     end
-
+    #if Gosu.button_up? Gosu::KbSpace
+      #puts "hi"
+      #@player.jump_down(@original_y - 200)
+    #end
   end
 
   def draw
@@ -45,5 +48,9 @@ class Wagon < Gosu::Window
     else
       super
     end
+  end
+  def button_up(id)
+    puts "hi"
+    super
   end
 end
