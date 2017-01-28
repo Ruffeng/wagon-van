@@ -8,9 +8,8 @@ class Wagon < Gosu::Window
     self.caption = "Le Wagon Game!"
     @background = background
     @player = player
-    @player.warp(320,240)
+    @player.warp(170,352)
   end
-
   def update
   end
 

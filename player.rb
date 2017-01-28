@@ -9,6 +9,7 @@ class Player
   end
 
   def draw
-    @image.draw_rot(@x,@y,1,@angle)
+    ##draw_rot(x, y, z, angle, center_x = 0.5, center_y = 0.5, scale_x = 1, scale_y = 1, color = 0xff_ffffff, mode = :default) ⇒ void
+    @image.draw_rot(@x,@y,1,@angle,0.5,0.5,0.3,0.3)
   end
 end
