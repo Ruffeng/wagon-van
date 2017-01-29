@@ -20,10 +20,12 @@ class Wagon < Gosu::Window
     # if u increase the number, then the velocity is faster
     # important to set a level
     @x_back -= 3
+    @player.update
     # @coordinates = Gosu::Image.from_text(
     #   self, "x: #{@x_back} - loc: #{@local_x} bgwidth : #{@background.width}",Gosu.default_font_name, 30)
     if Gosu.button_down? Gosu::KbSpace
       @player.jump(@original_y - 200)
+      #@player.update
     end
     #if Gosu.button_up? Gosu::KbSpace
       #puts "hi"
@@ -51,7 +53,6 @@ class Wagon < Gosu::Window
   end
   def button_up(id)
     if id == Gosu::KbSpace
-
       @player.jump_down(@original_y)
     end
     super
