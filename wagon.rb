@@ -14,20 +14,22 @@ class Wagon < Gosu::Window
     #Scrolling effect
     @x_back = @y_back = 0
     @jump = true
+    @jumpy = 14
   end
   def update
     # this variable is the one which takes care to move the background.
     # if u increase the number, then the velocity is faster
     # important to set a level
     @x_back -= 3
-    @player.update
     # @coordinates = Gosu::Image.from_text(
     #   self, "x: #{@x_back} - loc: #{@local_x} bgwidth : #{@background.width}",Gosu.default_font_name, 30)
     if Gosu.button_down? Gosu::KbSpace and @jump
       @jump = false
-      @player.jump(@original_y - 200)
+       @player.jump(@jumpy)
       #@player.update
     end
+    @player.update(@jumpy)
+
     #if Gosu.button_up? Gosu::KbSpace
       #puts "hi"
       #@player.jump_down(@original_y - 200)
@@ -55,7 +57,7 @@ class Wagon < Gosu::Window
   def button_up(id)
     if id == Gosu::KbSpace
       @jump = true
-      @player.jump_down(@original_y)
+      #@player.jump_down(@original_y)
     end
     super
   end
