@@ -19,7 +19,8 @@ class Player
     end
   end
   def jump_down(original)
-    if @y < original
+    until @y >= original
+
       @y += 8
     end
   end

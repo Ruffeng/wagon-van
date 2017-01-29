@@ -50,7 +50,10 @@ class Wagon < Gosu::Window
     end
   end
   def button_up(id)
-    puts "hi"
+    if id == Gosu::KbSpace
+
+      @player.jump_down(@original_y)
+    end
     super
   end
 end
