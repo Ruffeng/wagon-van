@@ -13,7 +13,7 @@ class Wagon < Gosu::Window
     @player.warp(@original_x,@original_y)
     #Scrolling effect
     @x_back = @y_back = 0
-
+    @jump = true
   end
   def update
     # this variable is the one which takes care to move the background.
@@ -23,7 +23,8 @@ class Wagon < Gosu::Window
     @player.update
     # @coordinates = Gosu::Image.from_text(
     #   self, "x: #{@x_back} - loc: #{@local_x} bgwidth : #{@background.width}",Gosu.default_font_name, 30)
-    if Gosu.button_down? Gosu::KbSpace
+    if Gosu.button_down? Gosu::KbSpace and @jump
+      @jump = false
       @player.jump(@original_y - 200)
       #@player.update
     end
@@ -53,6 +54,7 @@ class Wagon < Gosu::Window
   end
   def button_up(id)
     if id == Gosu::KbSpace
+      @jump = true
       @player.jump_down(@original_y)
     end
     super
