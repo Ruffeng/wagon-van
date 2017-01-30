@@ -12,6 +12,8 @@ class Wagon < Gosu::Window
     @background = background
     @player = player
     @player.warp(@original_x,@original_y)
+    @enemies_pos = 800
+    @enemies_size = 3
     @enemy_anim = enemy_picture
     @enemies = Array.new
 
@@ -31,14 +33,15 @@ class Wagon < Gosu::Window
       @player.jump(@jumpy)
     end
     @player.update(@jumpy)
-    @enemies.each(&:update)
+    @enemies.each{|e|e.update(@enemies_pos)}
 
-      # IMPLEMENT
-      if rand(100) < 4 and @enemies.size < 5
 
-        @enemies.push(Enemy.new(@enemy_anim))
-      end
-
+    if rand(100) < 4 and @enemies.size < @enemies_size
+        pos_last_elem = @enemies.size == 0 ? 0 : @enemies.last.x
+        @enemies.push(Enemy.new(@enemy_anim,@enemies_pos))
+        @enemies_pos += 200
+        @enemies_pos = 800 if @enemies_size == @enemies.size
+    end
   end
 
   def draw
