@@ -14,10 +14,10 @@ class Wagon < Gosu::Window
     @player.warp(@original_x,@original_y)
     @enemy_anim = enemy_picture
     @enemies = Array.new
-
+    @test_enemy = Enemy.new(@enemy_anim)
     #@enemy = Array.new
     #Scrolling effect
-    @x_back = @y_back = 0
+    @x_back = @y_back =@x_enemy= 0
     @jump = true
     @jumpy = 25
   end
@@ -25,30 +25,37 @@ class Wagon < Gosu::Window
     # this variable is the one which takes care to move the background.
     # if u increase the number, then the velocity is faster
     # important to set a level
+
     @x_back -= 3
     if Gosu.button_down? Gosu::KbSpace and @jump
       @jump = false
-       @player.jump(@jumpy)
+      @player.jump(@jumpy)
     end
     @player.update(@jumpy)
-
-     if rand(100) < 4 and @enemies.size < 5
-       @enemies.push(Enemy.new(@enemy_anim))
-     end
+    @test_enemy.update
+      # IMPLEMENT
+     # if rand(100) < 4 and @enemies.size < 5
+     #   @enemies.push(Enemy.new(@enemy_anim))
+     # end
 
   end
 
   def draw
     # Calculating the new position of the background
-    @local_x = @x_back % -800
+    @local_x = @x_enemy =@x_back % -800
     @player.draw
-    @enemies.each(&:draw)
+
+    #IMPLEMENT
+    #@enemies.each(&:draw)
     #@enemy_anim.draw
+    @test_enemy.draw
     # Drawing background
     @background.draw(@local_x,0,0)
     if @local_x < 0
       @background.draw(@local_x + 800,0,0)
+
     end
+
   end
   def button_down(id)
     if id == Gosu::KbEscape
