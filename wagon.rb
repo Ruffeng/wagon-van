@@ -14,8 +14,7 @@ class Wagon < Gosu::Window
     @player.warp(@original_x,@original_y)
     @enemy_anim = enemy_picture
     @enemies = Array.new
-    @test_enemy = Enemy.new(@enemy_anim)
-    #@enemy = Array.new
+
     #Scrolling effect
     @x_back = @y_back =@x_enemy= 0
     @jump = true
@@ -32,11 +31,13 @@ class Wagon < Gosu::Window
       @player.jump(@jumpy)
     end
     @player.update(@jumpy)
-    @test_enemy.update
+    @enemies.each(&:update)
+
       # IMPLEMENT
-     # if rand(100) < 4 and @enemies.size < 5
-     #   @enemies.push(Enemy.new(@enemy_anim))
-     # end
+      if rand(100) < 4 and @enemies.size < 5
+
+        @enemies.push(Enemy.new(@enemy_anim))
+      end
 
   end
 
@@ -46,9 +47,8 @@ class Wagon < Gosu::Window
     @player.draw
 
     #IMPLEMENT
-    #@enemies.each(&:draw)
-    #@enemy_anim.draw
-    @test_enemy.draw
+    @enemies.each(&:draw)
+
     # Drawing background
     @background.draw(@local_x,0,0)
     if @local_x < 0
