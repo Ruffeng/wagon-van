@@ -3,16 +3,14 @@ class Enemy
   attr_reader :x,:y
   def initialize(animation)
     @animation = animation
-    @y = 352
+    @y = 307
     #@x = rand * 480
-    @x = 450
+    @x = rand * 450
   end
 
   def draw
-
-
-    img = @animation[Gosu.milliseconds / 150 % @animation.size]
-    img.draw(400, 352,1)
+   # img = @animation[Gosu.milliseconds / 150 % @animation.size]
+    @animation.draw(@x, @y,1,0.4,0.4)
   end
 end
 
