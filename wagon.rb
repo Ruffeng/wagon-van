@@ -1,7 +1,8 @@
 require 'gosu'
-
+require "pry-byebug"
 class Wagon < Gosu::Window
-  def initialize(background,player)
+  def initialize(background,player,enemy_picture)
+
     #size of the game
     super 640,480
     # The title of the game
@@ -11,6 +12,8 @@ class Wagon < Gosu::Window
     @background = background
     @player = player
     @player.warp(@original_x,@original_y)
+    @enemy_anim = enemy_picture
+    @enemy = Array.new
     #Scrolling effect
     @x_back = @y_back = 0
     @jump = true
@@ -26,12 +29,18 @@ class Wagon < Gosu::Window
        @player.jump(@jumpy)
     end
     @player.update(@jumpy)
+    if rand(100) < 4 and @enemy.size < 25
+      @enemy.push(Enemy.new(@enemy_anim))
+    end
+
   end
 
   def draw
     # Calculating the new position of the background
     @local_x = @x_back % -800
     @player.draw
+    @enemy.each(&:draw)
+    #@enemy.draw
     # Drawing background
     @background.draw(@local_x,0,0)
     if @local_x < 0
