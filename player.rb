@@ -31,8 +31,10 @@ class Player
     @image.draw_rot(@x,@y,1,@angle,0.5,0.5,0.3,0.3)
   end
   def jump(original)
+   if @vel_y == 0
      @vel_y = original
      @down_y = original * -1
+   end
 
   end
   def check_jump
