@@ -3,7 +3,7 @@ class Enemy
   attr_reader :x,:y
   def initialize(animation,pos=800)
     @animation = animation
-    @y = 307
+    @y = 326
     #@x = rand * 480
 
     new_cactus(pos)
@@ -14,7 +14,7 @@ class Enemy
   end
   def draw
    # img = @animation[Gosu.milliseconds / 150 % @animation.size]
-    @animation.draw(@x, @y,1,0.4,0.4)
+    @animation.draw(@x, @y,1,0.3,0.3)
   end
   def new_cactus(pos)
 
@@ -22,6 +22,9 @@ class Enemy
     # unless (@x - last_elem_position) > 100
     #   new_cactus(last_elem_position)
     # end
+  end
+  def check_x
+    @x
   end
 end
 

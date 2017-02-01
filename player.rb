@@ -4,6 +4,8 @@ class Player
     @x = @y   = @angle = 0.0
     @score = @vel_y = @down_y = 0
     @allow = true
+    @score = 0
+    @game_over = false
   end
   def warp(x,y)
     @x,@y = x,y
@@ -28,7 +30,7 @@ class Player
       check_jump
   end
   def draw
-    @image.draw_rot(@x,@y,1,@angle,0.5,0.5,0.3,0.3)
+    @image.draw_rot(@x,@y,2,@angle,0.5,0.5,0.3,0.3)
   end
   def jump(original)
    if @vel_y == 0
@@ -43,5 +45,21 @@ class Player
         @down_y = 0
         @allow = true
       end
+  end
+  def avoid_enemies(enemies)
+    enemies.each_with_index do |enemy,index|
+       if Gosu.distance(@x,@y,enemy.x,enemy.y) < 45
+        @game_over = true
+       else
+        @score += 0.05
+       end
     end
+  end
+  def game_over?
+    @game_over
+  end
+  def score
+    @score
+  end
+
 end

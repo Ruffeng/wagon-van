@@ -16,31 +16,39 @@ class Wagon < Gosu::Window
     @enemies_size = 3
     @enemy_anim = enemy_picture
     @enemies = Array.new
+    @font = Gosu::Font.new(20)
+    @text_game_over = Gosu::Font.new(100)
 
     #Scrolling effect
     @x_back = @y_back =@x_enemy= 0
     @jump = true
     @jumpy = 25
+    @game_over = false
   end
   def update
     # this variable is the one which takes care to move the background.
     # if u increase the number, then the velocity is faster
     # important to set a level
 
-    @x_back -= 3
-    if Gosu.button_down? Gosu::KbSpace and @jump
-      @jump = false
-      @player.jump(@jumpy)
-    end
-    @player.update(@jumpy)
-    @enemies.each{|e|e.update(@enemies_pos)}
+    unless @game_over
+          @x_back -= 3
+          if Gosu.button_down? Gosu::KbSpace and @jump
+            @jump = false
+            @player.jump(@jumpy)
+          end
+          @player.update(@jumpy)
+          @player.avoid_enemies(@enemies)
+          @enemies.each{|e|e.update(@enemies_pos)}
 
 
-    if rand(100) < 4 and @enemies.size < @enemies_size
-        pos_last_elem = @enemies.size == 0 ? 0 : @enemies.last.x
-        @enemies.push(Enemy.new(@enemy_anim,@enemies_pos))
-        @enemies_pos += 200
-        @enemies_pos = 800 if @enemies_size == @enemies.size
+          if rand(100) < 4 and @enemies.size < @enemies_size
+              pos_last_elem = @enemies.size == 0 ? 0 : @enemies.last.x
+              @enemies.push(Enemy.new(@enemy_anim,@enemies_pos))
+              @enemies_pos += 200
+              @enemies_pos = 800 if @enemies_size == @enemies.size
+          end
+          @game_over = @player.game_over?
+
     end
   end
 
@@ -58,6 +66,10 @@ class Wagon < Gosu::Window
       @background.draw(@local_x + 800,0,0)
 
     end
+    @font.draw("Score: #{@player.score.round}", 10, 10, 1, 1.0, 1.0, Gosu::Color::YELLOW)
+
+    @text_game_over.draw("GAME OVER!", 35, 200, 1, 1.0, 1.0, Gosu::Color::RED) if @game_over
+
 
   end
   def button_down(id)
