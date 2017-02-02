@@ -22,6 +22,7 @@ class Wagon < Gosu::Window
     #Scrolling effect
     @x_back = @y_back =@x_enemy= 0
     @jump = true
+    @double_jump = 0
     @jumpy = 25
     @game_over = false
   end
@@ -32,9 +33,16 @@ class Wagon < Gosu::Window
 
     unless @game_over
           @x_back -= 3
+
           if Gosu.button_down? Gosu::KbSpace and @jump
             @jump = false
-            @player.jump(@jumpy)
+            if @double_jump == 1
+              @player.jump(@jumpy,true)
+            else
+              @player.jump(@jumpy)
+            end
+            @double_jump = @double_jump == 1 ? 0 : @double_jump +=1
+
           end
           @player.update(@jumpy)
           @player.avoid_enemies(@enemies)
