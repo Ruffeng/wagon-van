@@ -6,6 +6,8 @@ class Player
     @allow = true
     @score = 0
     @game_over = false
+    @double_jump_counter = true
+    @double_jump = false
   end
   def warp(x,y)
     @x,@y = x,y
@@ -36,11 +38,13 @@ class Player
    if @vel_y == 0
      @vel_y = original
      @down_y = original * -1
+     @double_jump = double_jump
    end
+   puts double_jump
 
   end
   def check_jump
-    if @vel_y == 0 and @allow == false
+    if (@vel_y == 0 and @allow == false)
         @vel_y = @down_y
         @down_y = 0
         @allow = true
