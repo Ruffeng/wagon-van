@@ -24,6 +24,7 @@ class Wagon < Gosu::Window
     @jump = true
     @double_jump = 0
     @jumpy = 25
+
     @game_over = false
   end
   def update
@@ -36,12 +37,8 @@ class Wagon < Gosu::Window
 
           if Gosu.button_down? Gosu::KbSpace and @jump
             @jump = false
-            if @double_jump == 1
-              @player.jump(@jumpy,true)
-            else
-              @player.jump(@jumpy)
-            end
-            @double_jump = @double_jump == 1 ? 0 : @double_jump +=1
+            @player.jump(@jumpy)
+
 
           end
           @player.update(@jumpy)
